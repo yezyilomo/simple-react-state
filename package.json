@@ -1,0 +1,29 @@
+{
+    "name": "simple-react-state",
+    "version": "0.0.1",
+    "description": "React state manager based on react hooks and react-redux. ",
+    "license": "MIT",
+    "homepage": "https://github.com/yezyilomo/simple-react-state/blob/master/README.md",
+    "repository": "https://github.com/yezyilomo/simple-react-state",
+    "bugs": "https://github.com/yezyilomo/simple-react-state/issues",
+    "keywords": [
+        "redux",
+        "reducer",
+        "state",
+        "immutable"
+    ],
+    "authors": [
+        "Yezileli Ilomo <yezileliilomo@hotmail.com> (https://github.com/yezyilomo)"
+    ],
+    "main": "src/index.js",
+    "files": [
+        "dist",
+        "lib",
+        "src"
+    ],
+    "scripts": {},
+    "dependencies": {
+        "redux-starter-kit": "^1.0.0"
+    },
+    "devDependencies": {}
+}
