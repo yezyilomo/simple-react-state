@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { configureStore as createStore } from 'redux-starter-kit';
+import { configureStore as prepareStore } from 'redux-starter-kit';
 import { rootReducer } from '../reducers';
 
 
@@ -11,7 +11,7 @@ function configureStore(config){
     else{
         config.reducer = combineReducers({rootReducer, passedReducer});
     }
-    return createStore(config);
+    return prepareStore(config);
 }
 
 export {configureStore}

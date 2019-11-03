@@ -12,13 +12,13 @@ function useGlobalState(stateSelector=null){
         for(let field of fields){
             obj = obj[field];
         }
-        return obj
+        return obj;
     }
 
-    const globalState = useSelector(getStateSelector);
-    const dispatch = useDispatch();
+    let globalState = useSelector(getStateSelector);
+    let dispatch = useDispatch();
 
-    const updateState = (action) => {
+    let updateState = (action) => {
         if (action.type === undefined){
             // Use base actions if action type is not specified
             action.type = "__BASE_ACTIONS__";
