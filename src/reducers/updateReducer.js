@@ -41,7 +41,6 @@ function updateState(state, dispatch){
     }
 
     if(dispatch.action === "assign" || dispatch.action === undefined){
-        //obj[fieldName] = dispatch.value;
         state = recreateState(dispatch.value)
     }
     else if(dispatch.action === "push"){
@@ -50,7 +49,6 @@ function updateState(state, dispatch){
         state = recreateState(newArray);
     }
     else if(dispatch.action === "pop"){
-        //obj[fieldName].pop();
         let newArray = [...obj[fieldName]]
         newArray.pop();
         state = recreateState(newArray);
@@ -64,7 +62,6 @@ function updateState(state, dispatch){
         state = recreateState(newArray);
     }
     else if(dispatch.action === "filter"){
-        // Note filter has no side effect
         let newArray = [...obj[fieldName]]
         let filteredArray = newArray.filter(dispatch.value);
         state = recreateState(filteredArray);
@@ -76,23 +73,24 @@ function updateState(state, dispatch){
 }
 
 
-function updateReducer(state, dispatches){
-    if(Array.isArray(dispatches)){
-        // Good to go
+function updateReducer(state, dispatch){
+    if(Array.isArray(dispatch)){
+        // Batch update
+        for(let dispatch of dispatch){
+            state = updateState(state, dispatch);
+        }
     }
-    else if(typeof dispatches === 'object' && dispatches !== null){
-        dispatches = [dispatches]
+    else if(typeof dispatch === 'object' && dispatch !== null){
+        // Single update
+        state = updateState(state, dispatch);
     }
     else {
-        let type = typeof dispatches;
-        if (dispatches === null){
+        // Invalid dispatch arg type
+        let type = typeof dispatch;
+        if (dispatch === null){
             type = null;
         }
         throw TypeError(`updateReducer() argument must be an object, or array of objects, not '${type}'.`);
-    }
-
-    for(let dispatch of dispatches){
-        state = updateState(state, dispatch);
     }
 
     return state
