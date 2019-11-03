@@ -23,6 +23,9 @@
     ],
     "scripts": {},
     "dependencies": {
+        "redux": "^4.0.0",
+        "react": "^16.8.3",
+        "react-redux": "^7.1.1",
         "redux-starter-kit": "^1.0.0"
     },
     "devDependencies": {}
