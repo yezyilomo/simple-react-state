@@ -11,7 +11,16 @@ function configureStore(config){
     else{
         config.reducer = combineReducers({rootReducer, passedReducer});
     }
-    return prepareStore(config);
+
+    let store = prepareStore(config);
+
+    // Add setState method on store as altenative to dispatch with action
+    // of type __BASE_ACTIONS__
+    store.constructor.prototype.setState = function (action){
+        action.type = "__BASE_ACTIONS__";
+        this.dispatch(action);
+    }
+    return store
 }
 
 export {configureStore}

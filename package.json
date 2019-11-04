@@ -1,6 +1,6 @@
 {
     "name": "simple-react-state",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "React state manager based on react hooks and react-redux. ",
     "license": "MIT",
     "homepage": "https://github.com/yezyilomo/simple-react-state/blob/master/README.md",
