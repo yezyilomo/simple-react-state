@@ -153,7 +153,7 @@ ReactDOM.render(App, document.querySelector("#root"));
 ```
 
 ## useGlobalState hook
-`useGlobalState` accepts a selection string, for example if you have store with data like
+`useGlobalState` accepts a selection string, for example if you have a store with data like
 ```js
 {
     user: {
@@ -184,7 +184,7 @@ If you pass nothing to `useGlobalState` the whole store is selected.
 
 
 ## useLocalState hook
-`useLocalState` works just like `useState` hook, it accepts initial state as argument except it returns an array of local state and `updateState` function(not `setState` like in `useState` hook).
+`useLocalState` works just like `useState` hook, it accepts initial state as an argument except it returns an array of local state and `updateState` function(not `setState` like in `useState` hook).
 
 ```js
 let user = {
