@@ -81,7 +81,7 @@ const App = <UserInfo/>
 ReactDOM.render(App, document.querySelector("#root"));
 ```
 
-Supported action types are `ASSIGN`, `PUSH`, `POP`, `REMOVE` and `FILTER`. The action type `ASSIGN` is the default, so if you haven't passed the type of your action that one will be set, therefore with this
+Supported action types are `ASSIGN`, `PUSH`, `POP`, `REMOVE` and `FILTER`. The action type `ASSIGN` is the default, so if you haven't passed the type of your action that one will be set, therefore with this in mind
 
 ```js
 updateUser({
@@ -98,8 +98,8 @@ updateUser({
     value: 'user@email.com'
 })
 ```
-<br/>
 
+## setState
 **simple-react-state** allows you to set global state with `setState` method from store object as
 
 ```js
@@ -152,7 +152,7 @@ const App = <Provider store={store}><UserInfo/></Provider>
 ReactDOM.render(App, document.querySelector("#root"));
 ```
 
-**Note:**
+## useGlobalState hook
 `useGlobalState` accepts a selection string, for example if you have store with data like
 ```js
 {
@@ -182,6 +182,8 @@ you can use `useGlobalState` hook to select a deeply nested state like
 
 If you pass nothing to `useGlobalState` the whole store is selected.
 
+
+## useLocalState hook
 `useLocalState` works just like `useState` hook, it accepts initial state as argument except it returns an array of local state and `updateState` function(not `setState` like in `useState` hook).
 
 ```js
@@ -197,7 +199,7 @@ let user = {
 [user, updateUser] = useLocalState(user)
 ```
 
-`updateState` function works the same on both `useGlobalState` and `useLocalState` hooks. The standard format is 
+`updateState` function works the same on both `useGlobalState` and `useLocalState` hooks, it dispatches an action to perform update with the following format 
 
 ```js
 updateState({
