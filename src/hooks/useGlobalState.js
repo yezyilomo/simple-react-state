@@ -18,14 +18,17 @@ function useGlobalState(stateSelector=null){
     let globalState = useSelector(getStateSelector);
     let dispatch = useDispatch();
 
-    let updateState = (action) => {
-        action.type = "__BASE_ACTIONS__";
-        if(action.field !== undefined){
-            action.field = stateSelector + '.' + action.field;
+    let updateState = (baseAction) => {
+        if(baseAction.field !== undefined){
+            baseAction.field = stateSelector + '.' + baseAction.field;
         }
         else{
-            action.field = stateSelector;
+            baseAction.field = stateSelector;
         }
+        let action = {
+            type: "BASE_ACTION", 
+            payload: baseAction
+        };
         dispatch(action);
     }
 

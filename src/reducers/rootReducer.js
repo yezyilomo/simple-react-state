@@ -3,8 +3,9 @@ import { updateReducer } from "./";
 
 function rootReducer(state, action) {
     switch (action.type) {
-        case '__BASE_ACTIONS__': {
-            return updateReducer(state, action);
+        case 'BASE_ACTION': {
+            let baseAction = action.payload;
+            return updateReducer(state, baseAction);
         }
         default:
             return state
