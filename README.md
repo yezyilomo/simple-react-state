@@ -7,11 +7,11 @@ yarn add simple-react-state
 ```
 
 ## Getting Started
+Using global state
 ```js
 import React from 'react';
 import {
-    Provider, configureStore,
-    useGlobalState, useLocalState
+    Provider, configureStore, useGlobalState
 } from 'simple-react-state';
 
 
@@ -27,7 +27,6 @@ let store = configureStore({
 
 function UserInfo(props){
     const [user, updateUser] = useGlobalState('user');
-    const [car, updateCar] = useLocalState({model: ''});
 
     let setUserEmail = (e) => {
         updateUser({
@@ -37,10 +36,34 @@ function UserInfo(props){
         });
     }
 
-    let setCarModel = (e) => {
-        updateCar({
+    return (
+        <div>
+            User Email: {user.email}
+            <br/>
+            <input type="text" name="email" value={user.email} onChange={setUserEmail} />
+        </div>
+    );
+}
+
+const App = <Provider store={store}><UserInfo/></Provider>
+ReactDOM.render(App, document.querySelector("#root"));
+```
+
+Using local state for the same example 
+```js
+import React from 'react';
+import {
+    Provider, configureStore, useLocalState
+} from 'simple-react-state';
+
+
+function UserInfo(props){
+    const [user, updateUser] = useLocalState({email: ""})
+
+    let setUserEmail = (e) => {
+        updateUser({
             type: 'ASSIGN',
-            field: 'model',
+            field: 'email',
             value: e.target.value
         });
     }
@@ -50,10 +73,6 @@ function UserInfo(props){
             User Email: {user.email}
             <br/>
             <input type="text" name="email" value={user.email} onChange={setUserEmail} />
-            <br/><br/><br/>
-            Car Model: {car.model}
-            <br/>
-            <input type="text" name="model" value={car.model} onChange={setCarModel} />
         </div>
     );
 }
@@ -112,18 +131,10 @@ store.setState(
 
 function UserInfo(props){
     const [user, updateUser] = useGlobalState('user');
-    const [car, updateCar] = useLocalState({model: ''});
 
     let setUserEmail = (e) => {
         updateUser({
             field: 'email',
-            value: e.target.value
-        });
-    }
-
-    let setCarModel = (e) => {
-        updateCar({
-            field: 'model',
             value: e.target.value
         });
     }
@@ -133,10 +144,6 @@ function UserInfo(props){
             User Email: {user.email}
             <br/>
             <input type="text" name="email" value={user.email} onChange={setUserEmail} />
-            <br/><br/><br/>
-            Car Model: {car.model}
-            <br/>
-            <input type="text" name="model" value={car.model} onChange={setCarModel} />
         </div>
     );
 }
