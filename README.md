@@ -106,7 +106,7 @@ updateUser({
 store.setState({
     type: 'ASSIGN',
     field: 'your field',
-    value: 'your value
+    value: 'your value'
 });
 ```
 
@@ -158,7 +158,7 @@ ReactDOM.render(App, document.querySelector("#root"));
 {
     user: {
         name: 'Yezy',
-        age: 24',
+        age: 24,
         account: {
             id: '23334',
             balance: 433.3
@@ -189,7 +189,7 @@ If you pass nothing to `useGlobalState` the whole store is selected.
 ```js
 let user = {
     name: 'Yezy',
-    age: 24',
+    age: 24,
     account: {
         id: '23334',
         balance: 433.3
@@ -205,7 +205,7 @@ let user = {
 updateState({
     type: 'update type',
     field: 'your field',
-    value: 'your value
+    value: 'your value'
 })
 ```
 
