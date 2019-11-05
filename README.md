@@ -49,12 +49,12 @@ const App = <Provider store={store}><UserInfo/></Provider>
 ReactDOM.render(App, document.querySelector("#root"));
 ```
 
-Using local state for the same example 
+Using local state for the same example
 ```js
+//No need for Provider or configureStore because 
+//we are not using global state here
 import React from 'react';
-import {
-    Provider, configureStore, useLocalState
-} from 'simple-react-state';
+import { useLocalState } from 'simple-react-state';
 
 
 function UserInfo(props){
@@ -77,7 +77,7 @@ function UserInfo(props){
     );
 }
 
-const App = <Provider store={store}><UserInfo/></Provider>
+const App = <UserInfo/>
 ReactDOM.render(App, document.querySelector("#root"));
 ```
 
