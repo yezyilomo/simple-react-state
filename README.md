@@ -79,8 +79,9 @@ updateUser({
     value: 'user@email.com'
 })
 ```
+<br/>
 
-You can set global state with setState method from store object as
+**simple-react-state** allows you to set global state with `setState` method from store object as
 
 ```js
 store.setState({
@@ -145,7 +146,7 @@ ReactDOM.render(App, document.querySelector("#root"));
 ```
 
 **Note:**
-`useGlobalState` accept selection string, for example if you have store with data like
+`useGlobalState` accepts a selection string, for example if you have store with data like
 ```js
 {
     user: {
@@ -159,7 +160,7 @@ ReactDOM.render(App, document.querySelector("#root"));
 }
 ```
 
-you can use `useGlobalState` hook to select deeply nested state like
+you can use `useGlobalState` hook to select a deeply nested state like
 ```js
 [age, updateAge] = useGlobalState('user.age')
 ```
