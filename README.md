@@ -112,7 +112,7 @@ store.setState({
 
 **Note:** This should be used outside of your component.
 
-With this in mind the example above could be re-written to 
+With this in mind the first example above could be re-written to 
 
 ```js
 import React from 'react';
