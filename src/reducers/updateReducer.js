@@ -1,19 +1,20 @@
-function updateState(state, dispatch){
-    if(typeof dispatch !== 'object' || dispatch === null){
-        let type = typeof dispatch;
-        if (dispatch === null){
+function updateState(state, action){
+    if(typeof action !== 'object' || action === null){
+        let type = typeof action;
+        if (action === null){
             type = null;
         }
         throw TypeError(`updateState() argument must be an object, or array of objects, not array of '${type}', or mixed.`);
     }
 
-    let fields = []
-    let fieldName = "stateKey"
-    let obj = {stateKey: state}
+    let fields = [];
+    let fieldName = "stateKey";
+    let obj = {stateKey: state};
     let objStructure = [];
-    if(dispatch.field !== undefined){
+
+    if(action.field !== undefined){
         // At lest one level of obj nesting
-        fields = dispatch.field.split(".");
+        fields = action.field.split(".");
         fieldName = fields.pop();
         obj = state;
         for(let field of fields){
@@ -23,77 +24,79 @@ function updateState(state, dispatch){
     }
 
     let recreateState = (valueChanged) => {
-        if (dispatch.field === undefined){
+        if (action.field === undefined){
             // Update on zero level of obj nesting
             return valueChanged;
         }
 
-        let newObj = {...obj}
-        newObj[`${fieldName}`] = valueChanged
+        let newObj = {...obj};
+        newObj[`${fieldName}`] = valueChanged;
         let finalObj = newObj;
 
         for(let oldObj of objStructure.reverse()){
             finalObj = {...oldObj.value};
             finalObj[`${oldObj.name}`] = newObj;
-            newObj = finalObj
+            newObj = finalObj;
         }
         return finalObj;
     }
 
-    if(dispatch.action === "assign" || dispatch.action === undefined){
-        state = recreateState(dispatch.value)
-    }
-    else if(dispatch.action === "push"){
-        let newArray = [...obj[fieldName]]
-        newArray.push(dispatch.value);
-        state = recreateState(newArray);
-    }
-    else if(dispatch.action === "pop"){
-        let newArray = [...obj[fieldName]]
-        newArray.pop();
-        state = recreateState(newArray);
-    }
-    else if(dispatch.action === "remove"){
-        let newArray = [...obj[fieldName]]
-        let index = newArray.indexOf(dispatch.value);
-        if (index > -1){
-            newArray.splice(index, 1);
+    switch (action.type) {
+        case 'ASSIGN':
+        case undefined: {
+            return recreateState(action.value);
         }
-        state = recreateState(newArray);
+        case 'PUSH': {
+            let newArray = [...obj[fieldName]];
+            newArray.push(action.value);
+            return recreateState(newArray);
+        }
+        case 'POP': {
+            let newArray = [...obj[fieldName]];
+            newArray.pop();
+            return recreateState(newArray);
+        }
+        case 'REMOVE': {
+            let newArray = [...obj[fieldName]];
+            let index = newArray.indexOf(action.value);
+            if (index > -1){
+                newArray.splice(index, 1);
+            }
+            return recreateState(newArray);
+        }
+        case 'FILTER': {
+            let newArray = [...obj[fieldName]];
+            let filteredArray = newArray.filter(action.value);
+            return recreateState(filteredArray);
+        }
+        default:
+            return state
     }
-    else if(dispatch.action === "filter"){
-        let newArray = [...obj[fieldName]]
-        let filteredArray = newArray.filter(dispatch.value);
-        state = recreateState(filteredArray);
-    }
-    else{
-        // Unsupported Operator
-    }
-    return state
+
 }
 
 
-function updateReducer(state, dispatch){
-    if(Array.isArray(dispatch)){
+function updateReducer(state, action){
+    if(Array.isArray(action)){
         // Batch update
-        for(let dispatch of dispatch){
-            state = updateState(state, dispatch);
+        for(let actionItem of action){
+            state = updateState(state, actionItem);
         }
     }
-    else if(typeof dispatch === 'object' && dispatch !== null){
+    else if(typeof action === 'object' && action !== null){
         // Single update
-        state = updateState(state, dispatch);
+        state = updateState(state, action);
     }
     else {
-        // Invalid dispatch arg type
-        let type = typeof dispatch;
-        if (dispatch === null){
+        // Invalid action arg type
+        let type = typeof action;
+        if (action === null){
             type = null;
         }
         throw TypeError(`updateReducer() argument must be an object, or array of objects, not '${type}'.`);
     }
 
-    return state
+    return state;
 }
 
 export {updateReducer}
