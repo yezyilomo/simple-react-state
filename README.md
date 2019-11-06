@@ -1,5 +1,5 @@
 # simple-react-state
-Simple react state manager based on react hooks and react-redux. **simple-react-state** makes working with both local and global react states completely painless it also works pretty well with nested states.
+A simple react state manager based on react hooks and react-redux which makes working with both local and global states completely painless it also works pretty well with nested states.
 
 ## Installing
 ```
@@ -15,14 +15,14 @@ import {
 } from 'simple-react-state';
 
 
-let preloadedState = {
+let initialState = {
     user: {
         email: ""
     }
 };
 
 let store = configureStore({
-    preloadedState: preloadedState
+    initialState: initialState
 });
 
 function UserInfo(props){
@@ -81,23 +81,7 @@ const App = <UserInfo/>
 ReactDOM.render(App, document.querySelector("#root"));
 ```
 
-Supported action types are `ASSIGN`, `PUSH`, `POP`, `REMOVE` and `FILTER`. The action type `ASSIGN` is the default, so if you haven't passed the type of your action that one will be set, therefore with this in mind
-
-```js
-updateUser({
-    field: 'email',
-    value: 'user@email.com'
-})
-```
-
-is the same as
-```js
-updateUser({
-    type: 'ASSIGN',
-    field: 'email',
-    value: 'user@email.com'
-})
-```
+Supported action types are `ASSIGN`, `PUSH`, `POP`, `REMOVE` and `FILTER`. `ASSIGN` is for assigning a value to a field, `PUSH`, `POP`, `REMOVE` and `FILTER` are for arrays, these action types correspond with array methods.
 
 ## setState
 **simple-react-state** allows you to set global state with `setState` method from store object as
@@ -125,6 +109,7 @@ import {
 let store = configureStore({});
 
 store.setState(
+    type: 'ASSIGN',
     field: 'user',
     value: {email: ''}
 )
@@ -134,6 +119,7 @@ function UserInfo(props){
 
     let setUserEmail = (e) => {
         updateUser({
+            type: 'ASSIGN',
             field: 'email',
             value: e.target.value
         });
@@ -153,7 +139,7 @@ ReactDOM.render(App, document.querySelector("#root"));
 ```
 
 ## useGlobalState hook
-`useGlobalState` accepts a selection string, for example if you have a store with data like
+`useGlobalState` works much like `useState` hook but it accepts a selection string and returns an array of three items which are state, updateState and dispatch, in most cases you will be using the first two items(state and updateState), the last item(dispatch) is for dispatching custom actions if you will have any. For example if you have a store with data like
 ```js
 {
     user: {
@@ -169,22 +155,22 @@ ReactDOM.render(App, document.querySelector("#root"));
 
 you can use `useGlobalState` hook to select a deeply nested state like
 ```js
-[age, updateAge] = useGlobalState('user.age')
+[age, updateAge, dispatch] = useGlobalState('user.age')
 ```
 
 ```js
-[account, updateAccount] = useGlobalState('user.account')
+[account, updateAccount, dispatch] = useGlobalState('user.account')
 ```
 
 ```js
-[balance, updateBalance] = useGlobalState('user.account.balance')
+[balance, updateBalance, dispatch] = useGlobalState('user.account.balance')
 ```
 
-If you pass nothing to `useGlobalState` the whole store is selected.
+**Note:** If you pass nothing to `useGlobalState` the whole store is selected.
 
 
 ## useLocalState hook
-`useLocalState` works just like `useState` hook, it accepts initial state as an argument except it returns an array of local state and `updateState` function(not `setState` like in `useState` hook).
+`useLocalState` works just like `useState` hook too, it accepts initial state as an argument except it returns an array of local state and `updateState` function(not `setState` like in `useState` hook).
 
 ```js
 let user = {
@@ -199,7 +185,8 @@ let user = {
 [user, updateUser] = useLocalState(user)
 ```
 
-`updateState` function works the same on both `useGlobalState` and `useLocalState` hooks, it dispatches an action to perform update with the following format 
+## updateState
+`updateState` function works the same on both `useGlobalState` and `useLocalState` hooks, it dispatches an action to perform update on state, an action dispatched should have the following format 
 
 ```js
 updateState({
@@ -210,3 +197,23 @@ updateState({
 ```
 
 where type can be `ASSIGN`, `PUSH`, `POP`, `REMOVE` or `FILTER`
+
+`ASSIGN` is the default action type, so if you haven't passed the type of your action that one will be used, therefore with this in mind
+
+```js
+updateUser({
+    field: 'email',
+    value: 'user@email.com'
+})
+```
+
+is the same as
+```js
+updateUser({
+    type: 'ASSIGN',
+    field: 'email',
+    value: 'user@email.com'
+})
+```
+
+Pretty cool, right?
