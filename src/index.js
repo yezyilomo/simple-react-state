@@ -6,5 +6,5 @@ import { rootReducer, updateReducer } from './reducers';
 
 export { 
     Provider, configureStore, useLocalState, 
-    useGlobalState, rootReducer, updateReducer
+    useGlobalState, updateReducer
 }

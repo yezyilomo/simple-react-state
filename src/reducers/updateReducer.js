@@ -1,10 +1,11 @@
 function updateState(state, action){
     if(typeof action !== 'object' || action === null){
+        // Invalid action
         let type = typeof action;
         if (action === null){
             type = null;
         }
-        throw TypeError(`updateState() argument must be an object, or array of objects, not array of '${type}', or mixed.`);
+        throw TypeError(`updateState() argument must be action object not '${type}'.`);
     }
 
     let fields = [];
@@ -22,23 +23,27 @@ function updateState(state, action){
             obj = obj[field];
         }
     }
-
+    
     let recreateState = (valueChanged) => {
         if (action.field === undefined){
-            // Update on zero level of obj nesting
+            // Update entire state
             return valueChanged;
         }
 
+        // Create a partial compy of an object to update
         let newObj = {...obj};
-        newObj[`${fieldName}`] = valueChanged;
-        let finalObj = newObj;
 
+        // Update required field
+        newObj[`${fieldName}`] = valueChanged;
+        let updatedState = newObj;
+
+        // Recreate state object(patch back updated copy of an object to state)
         for(let oldObj of objStructure.reverse()){
-            finalObj = {...oldObj.value};
-            finalObj[`${oldObj.name}`] = newObj;
-            newObj = finalObj;
+            updatedState = {...oldObj.value};
+            updatedState[`${oldObj.name}`] = newObj;
+            newObj = updatedState;
         }
-        return finalObj;
+        return updatedState;
     }
 
     switch (action.type) {
@@ -72,7 +77,6 @@ function updateState(state, action){
         default:
             return state
     }
-
 }
 
 
@@ -88,12 +92,12 @@ function updateReducer(state, action){
         state = updateState(state, action);
     }
     else {
-        // Invalid action arg type
+        // Invalid action
         let type = typeof action;
         if (action === null){
             type = null;
         }
-        throw TypeError(`updateReducer() argument must be an object, or array of objects, not '${type}'.`);
+        throw TypeError(`updateReducer() argument must be action object, or array of actions, not '${type}'.`);
     }
 
     return state;
