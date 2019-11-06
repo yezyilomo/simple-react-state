@@ -4,6 +4,8 @@ import { rootReducer } from '../reducers';
 
 
 function configureStore(config){
+    // use initialState instaead of preloadedState to set initial store state
+    config.preloadedState = config.initialState;
     let reducer = config.reducer;
     if(reducer === undefined){
         config.reducer = rootReducer
