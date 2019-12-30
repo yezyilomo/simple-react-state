@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import { configureStore } from './store';
+import { updateReducer } from './reducers';
 import { useLocalState, useGlobalState } from './hooks';
-import { rootReducer, updateReducer } from './reducers';
 
 
 export { 
