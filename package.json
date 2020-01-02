@@ -1,6 +1,6 @@
 {
     "name": "simple-react-state",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "React state manager based on react hooks and react-redux.",
     "license": "MIT",
     "homepage": "https://github.com/yezyilomo/simple-react-state/blob/master/README.md",
@@ -25,11 +25,11 @@
         "test": "jest"
     },
     "dependencies": {
+        "@reduxjs/toolkit": "^1.2.1",
         "react": "^16.8.3",
         "react-dom": "^16.8.3",
         "react-redux": "^7.1.1",
-        "redux": "^4.0.0",
-        "redux-starter-kit": "^1.0.0"
+        "redux": "^4.0.0"
     },
     "devDependencies": {
         "@testing-library/react-hooks": "^3.2.1",
