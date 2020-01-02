@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { configureStore as prepareStore } from 'redux-starter-kit';
+import { configureStore as prepareStore } from '@reduxjs/toolkit';
 import { rootReducer } from '../reducers';
 
 
