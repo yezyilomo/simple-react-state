@@ -79,7 +79,7 @@ ReactDOM.render(App, document.querySelector("#root"));
 
 ## API
 ### `useLocalState` hook
-`useLocalState` works just like `useState` hook too, it accepts initial state as an argument except it returns an array of local state and `updateState` function(not `setState` like in `useState` hook).
+`useLocalState` works just like `useState` hook, it accepts initial state as an argument except it returns an array of local state and `updateState` function(not `setState` like in `useState` hook).
 
 ```js
 let user = {
@@ -95,7 +95,7 @@ let user = {
 ```
 
 ### `useGlobalState` hook
-`useGlobalState` works much like `useState` hook but it accepts a selection string and returns an array of three items which are state, updateState and dispatch, in most cases you will be using the first two items(state and updateState), the last item(dispatch) is for dispatching custom actions if you will have any. For example if you have a store with data like
+`useGlobalState` works just like `useState` hook too but it accepts a selection string and returns an array of three items which are `state`, `updateState` and `dispatch`, in most cases you will be using the first two items(state and updateState), the last item(dispatch) is for dispatching custom actions if you will have any. For example if you have a store with data like
 ```js
 {
     user: {
@@ -157,7 +157,7 @@ updateUser({
 ```
 
 ### `setState`
-**simple-react-state** allows you to set global state with `setState` method from store object, `setState` works just like `updateState` in fact they are both using the same reducer, so all action types supported by `updateState` are also supported by `setState` too. Here is how to use it
+**simple-react-state** allows you to set global state with `setState` method from store object, `setState` works just like `updateState` in fact they are both using the same reducer(`updateReducer`), so all action types supported by `updateState` are also supported by `setState` too. Here is how to use it
 
 ```js
 store.setState({
