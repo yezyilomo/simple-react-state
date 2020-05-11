@@ -3,7 +3,7 @@ A simple react state manager based on react hooks and react-redux which makes wo
 
 ## Installing
 ```
-yarn add simple-react-state
+yarn add https://github.com/yezyilomo/simple-react-state
 ```
 
 ## Getting Started
